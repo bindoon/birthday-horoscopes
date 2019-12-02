@@ -1,0 +1,51 @@
+{
+  "name": "birthday-horoscopes",
+  "version": "1.0.0",
+  "description": "the date of birth and the eight characters of a horoscope",
+  "files": [
+    "demo/",
+    "lib/",
+    "build/"
+  ],
+  "main": "lib/index.js",
+  "stylePath": "style.js",
+  "scripts": {
+    "start": "ice-scripts dev",
+    "build": "ice-scripts build",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint --cache --ext .js,.jsx ./",
+    "test": "mocha --require intelli-espower-loader || true"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "component"
+  ],
+  "dependencies": {
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "@alifd/next": "^1.18.16",
+    "@ice/spec": "^0.1.1",
+    "eslint": "^6.0.1",
+    "ice-plugin-component": "^0.1.1",
+    "ice-plugin-fusion": "^0.1.4",
+    "ice-plugin-moment-locales": "^0.1.0",
+    "ice-scripts": "^2.0.0",
+    "intelli-espower-loader": "^1.0.1",
+    "mocha": "^6.2.2",
+    "moment": "^2.24.0",
+    "power-assert": "^1.6.1",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
+  },
+  "peerDependencies": {
+    "react": "^16.3.0"
+  },
+  "componentConfig": {
+    "name": "birthday-horoscopes",
+    "title": "BirthdayHoroscopes",
+    "category": "Others"
+  }
+}
