@@ -11,6 +11,10 @@
  * @农历转公历：calendar.lunar2solar(1987,09,10); //[you can ignore params of prefix 0]
  * clone from https://github.com/jjonline/calendar.js
  */
+/**
+ * 阴历也叫太阴历，是以月亮围绕地球转动的规律制定的。阴历的一个月叫做“朔望月”。每月初一为朔日，十五为望日，“朔望月”是月相盈亏的平均周期。阴历的时间和阳历相比，每年大约差十一天。
+ * 中国自古的历法是一种阴阳合历，一般称为“农历”。农历和阴历是有差别的，如果完全按照阴历来，可能不出五年，我们就要在夏天过春节了。然而这种情况并没有发生，因为中国的历法中有一项伟大的发明叫“置闰法”，每19年中设置7个闰月，有闰月的年份一年383天或384天，称为闰年。比如2016年、2020年都是闰年。
+ */
 var calendar = {
 
     /**
@@ -72,6 +76,8 @@ var calendar = {
 
     /**
      * 24节气速查表
+     * 农历根据太阳的位置，把一年分为二十四个节气，便于安排农业生产。所以二十四节气来自农历，而非阴历。
+     * 除了清明节之外，中国的其他传统节日都是根据阴历设置的。
      * @Array Of Property
      * @return Cn string
      */
@@ -174,6 +180,7 @@ var calendar = {
 
     /**
      * 返回农历y年一整年的总天数
+     * 置闰法: 每19年中设置7个闰月，有闰月的年份一年383天或384天，称为闰年。比如2016年、2020年都是闰年。陆游的诗《蜗舍》中有：“麦因多雨损，蚕遇闰年迟”。
      * @param lunar Year
      * @return Number
      * @eg:var count = calendar.lYearDays(1987) ;//count=387
@@ -191,7 +198,7 @@ var calendar = {
      * @return Number (0-12)
      * @eg:var leapMonth = calendar.leapMonth(1987) ;//leapMonth=6
      */
-    leapMonth: function(y) { //闰字编码 \u95f0
+    leapMonth: function(y) {
         return (this.lunarInfo[y - 1900] & 0xf);
     },
 
@@ -328,7 +335,7 @@ var calendar = {
      * @return Cn string
      * @eg:var cnMonth = calendar.toChinaMonth(12) ;//cnMonth='腊月'
      */
-    toChinaMonth: function(m) { // 月 => \u6708
+    toChinaMonth: function(m) {
         if (m > 12 || m < 1) { return -1 } //若参数错误 返回-1
         var s = this.nStr3[m - 1];
         s += "月"; //加上月字
@@ -490,7 +497,7 @@ var calendar = {
         //该日期所属的星座
         var astro = this.toAstro(m, d);
 
-        return { 'lYear': year, 'lMonth': month, 'lDay': day, 'Animal': this.getAnimal(year), 'IMonthCn': (isLeap ? "\u95f0" : '') + this.toChinaMonth(month), 'IDayCn': this.toChinaDay(day), 'cYear': y, 'cMonth': m, 'cDay': d, 'gzYear': gzY, 'gzMonth': gzM, 'gzDay': gzD, 'isToday': isToday, 'isLeap': isLeap, 'nWeek': nWeek, 'ncWeek': "\u661f\u671f" + cWeek, 'isTerm': isTerm, 'Term': Term, 'astro': astro };
+        return { 'lYear': year, 'lMonth': month, 'lDay': day, 'Animal': this.getAnimal(year), 'IMonthCn': (isLeap ? "闰" : '') + this.toChinaMonth(month), 'IDayCn': this.toChinaDay(day), 'cYear': y, 'cMonth': m, 'cDay': d, 'gzYear': gzY, 'gzMonth': gzM, 'gzDay': gzD, 'isToday': isToday, 'isLeap': isLeap, 'nWeek': nWeek, 'ncWeek': "星期" + cWeek, 'isTerm': isTerm, 'Term': Term, 'astro': astro };
     },
 
     /**
