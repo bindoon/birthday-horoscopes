@@ -65,14 +65,47 @@ var calendar = {
      * @Array Of Property
      * @return Cn string
      */
-    Zhi: ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"],
+    Zhi: ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"],
 
+    /*
+    根据出生日子的天干，通过下表来查算时辰干支：
+    时辰干支查算表
+    时间时辰                             五行纪日干支
+                          甲己     乙庚     丙辛     丁壬     戊癸
+    
+    23－01 子/水           甲子     丙子     戊子     庚子     壬子
+    01－03 丑/土           乙丑     丁丑     己丑     辛丑     癸丑
+    03－05 寅/木           丙寅     戊寅     庚寅     壬寅     甲寅
+    05－07 卯/木           丁卯     己卯     辛卯     癸卯     乙卯
+    07－09 辰/土           戊辰     庚辰     壬辰     甲辰     丙辰
+    09－11 巳/火           己巳     辛巳     癸巳     己巳     丁巳
+    11－13 午/火           庚午     壬午     甲午     丙午     戊午
+    13－15 未/土           辛未     癸未     乙未     丁未     己未
+    15－17 申/金           壬申     甲申     丙申     戊申     庚申
+    17－19 酉/金           癸酉     乙酉     丁酉     己酉     辛酉
+    19－21 戊/土           甲戌     丙戌     戊戌     庚戌     壬戌
+    21－23 亥/水           乙亥     丁亥     己亥     辛亥     癸亥
+    */
+    GanZhiTable: [
+        ['甲子','丙子', '戊子', '庚子', '壬子'],
+        ['乙丑','丁丑', '己丑', '辛丑', '癸丑'],
+        ['丙寅','戊寅', '庚寅', '壬寅', '甲寅'],
+        ['丁卯','己卯', '辛卯', '癸卯', '乙卯'],
+        ['戊辰','庚辰', '壬辰', '甲辰', '丙辰'],
+        ['己巳','辛巳', '癸巳', '己巳', '丁巳'],
+        ['庚午', '壬午','甲午', '丙午', '戊午'],
+        ['辛未','癸未', '乙未', '丁未', '己未'],
+        ['壬申','甲申', '丙申', '戊申', '庚申'],
+        ['癸酉','乙酉', '丁酉', '己酉', '辛酉'],
+        ['甲戌','丙戌', '戊戌', '庚戌', '壬戌'],
+        ['乙亥','丁亥', '己亥', '辛亥', '癸亥']
+    ],
     /**
      * 天干地支之地支速查表<=>生肖
      * @Array Of Property
      * @return Cn string
      */
-    Animals: ["鼠","牛","虎","兔","龙","蛇","马","羊","猴","鸡","狗","猪"],
+    Animals: ["鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"],
 
     /**
      * 24节气速查表
@@ -81,7 +114,7 @@ var calendar = {
      * @Array Of Property
      * @return Cn string
      */
-    solarTerm: ["小寒","大寒","立春","雨水","惊蛰","春分","清明","谷雨","立夏","小满","芒种","夏至","小暑","大暑","立秋","处暑","白露","秋分","寒露","霜降","立冬","小雪","大雪","冬至"],
+    solarTerm: ["小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至"],
 
     /**
      * 1900-2100各年的24节气日期速查表
@@ -162,21 +195,21 @@ var calendar = {
      * @Array Of Property
      * @return Cn string
      */
-    nStr1: ['日','一','二','三','四','五','六','七','八','九','十'],
+    nStr1: ['日', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'],
 
     /**
      * 日期转农历称呼速查表
      * @Array Of Property
      * @return Cn string
      */
-    nStr2: ['初','十','廿','卅'],
+    nStr2: ['初', '十', '廿', '卅'],
 
     /**
      * 月份转农历称呼速查表
      * @Array Of Property
      * @return Cn string
      */
-    nStr3: ['正','一','二','三','四','五','六','七','八','九','十','冬','腊'],
+    nStr3: ['正', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '冬', '腊'],
 
     /**
      * 返回农历y年一整年的总天数
@@ -265,7 +298,7 @@ var calendar = {
     toAstro: function(cMonth, cDay) {
         var s = "魔羯水瓶双鱼白羊金牛双子巨蟹狮子处女天秤天蝎射手魔羯";
         var arr = [20, 19, 21, 21, 21, 22, 23, 23, 23, 23, 22, 22];
-        return s.substr(cMonth * 2 - (cDay < arr[cMonth - 1] ? 2 : 0), 2) + "座"; 
+        return s.substr(cMonth * 2 - (cDay < arr[cMonth - 1] ? 2 : 0), 2) + "座";
     },
 
     /**
@@ -387,7 +420,7 @@ var calendar = {
      * @return JSON object
      * @eg:console.log(calendar.solar2lunar(1987,11,01));
      */
-    solar2lunar: function(y, m, d) { //参数区间1900.1.31~2100.12.31
+    solar2lunar: function(y, m, d, h) { //参数区间1900.1.31~2100.12.31
         //年份限定、上限
         if (y < 1900 || y > 2100) {
             return -1; // undefined转换为数字变为NaN
@@ -402,9 +435,12 @@ var calendar = {
         } else {
             var objDate = new Date(y, parseInt(m) - 1, d)
         }
-        var i, leap = 0, temp = 0;
+        var i, leap = 0,
+            temp = 0;
         //修正ymd参数
-        var y = objDate.getFullYear(), m = objDate.getMonth() + 1, d = objDate.getDate();
+        var y = objDate.getFullYear(),
+            m = objDate.getMonth() + 1,
+            d = objDate.getDate();
         // 距离1900-1-31 偏离的天数
         var offset = (Date.UTC(y, m - 1, d) - Date.UTC(1900, 0, 31)) / 86400000;
         for (i = 1900; i < 2101 && offset > 0; i++) {
@@ -497,7 +533,37 @@ var calendar = {
         //该日期所属的星座
         var astro = this.toAstro(m, d);
 
-        return { 'lYear': year, 'lMonth': month, 'lDay': day, 'Animal': this.getAnimal(year), 'IMonthCn': (isLeap ? "闰" : '') + this.toChinaMonth(month), 'IDayCn': this.toChinaDay(day), 'cYear': y, 'cMonth': m, 'cDay': d, 'gzYear': gzY, 'gzMonth': gzM, 'gzDay': gzD, 'isToday': isToday, 'isLeap': isLeap, 'nWeek': nWeek, 'ncWeek': "星期" + cWeek, 'isTerm': isTerm, 'Term': Term, 'astro': astro };
+        var hour = h, gzHour, IHourCn;
+        if (hour) {
+            gzHour = this.getTimeGanZhi(gzD[0], hour);
+            IHourCn = this.Zhi[parseInt((hour + 1) / 2)] + '时';
+        }
+
+        return { 
+            lYear: year, 
+            lMonth: month, 
+            lDay: day, 
+            lHour: hour,
+            Animal: this.getAnimal(year), 
+            IMonthCn: (isLeap ? "闰" : '') + this.toChinaMonth(month), 
+            IDayCn: this.toChinaDay(day), 
+            IHourCn: IHourCn,
+            cYear: y, 
+            cMonth: m, 
+            cDay: d, 
+            cHour: hour,
+            gzYear: gzY, 
+            gzMonth: gzM, 
+            gzDay: gzD, 
+            gzHour: gzHour,
+            isToday: isToday, 
+            isLeap: isLeap, 
+            nWeek: nWeek, 
+            ncWeek: "星期" + cWeek, 
+            isTerm: isTerm, 
+            Term: Term, 
+            astro: astro 
+        };
     },
 
     /**
@@ -552,6 +618,17 @@ var calendar = {
         var cD = calObj.getUTCDate();
 
         return this.solar2lunar(cY, cM, cD);
+    },
+    getTimeGanZhi: function(dayGan, hour) {
+        var i;
+        for (i = 0; i < 10; i++) {
+            if (dayGan === this.Gan[i]) break;
+        }
+
+        var indexX = i % 5;
+        var indexY = parseInt((hour + 1) / 2);
+
+        return this.GanZhiTable[indexY][indexX]
     }
 };
 

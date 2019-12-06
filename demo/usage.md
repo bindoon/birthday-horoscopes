@@ -25,7 +25,7 @@ const formItemLayout = {
 
 class App extends Component {
   state = {
-    date: moment('2019-2-22', 'YYYY-MM-DD')
+    date: moment('2019-2-22 16:00:00', 'YYYY-MM-DD hh:mm:ss')
   }
   handleDateChange = (date) => {
     console.log(date)
@@ -35,16 +35,16 @@ class App extends Component {
   }
   render() {
     const {date} = this.state;
-    const lunar = BirthdayHoroscopes.solar2lunar(date.year(), date.month() + 1, date.date());
+    const lunar = BirthdayHoroscopes.solar2lunar(date.year(), date.month() + 1, date.date(), date.hour());
 
     return (
       <div>
-        输入阳历日期: <DatePicker defaultValue={date} onChange={this.handleDateChange}/>
+        输入阳历日期: <DatePicker defaultValue={date} onChange={this.handleDateChange} showTime/>
         <hr/>
         <Form {...formItemLayout} size="small">
-          <Item label="阳历:"><p>{lunar.cYear}-{lunar.cMonth}-{lunar.cDay}</p></Item>
-          <Item label="农历:"><p>{lunar.lYear} {lunar.IMonthCn} {lunar.IDayCn}</p></Item>
-          <Item label="干支纪年:"><p>{lunar.gzYear} {lunar.gzMonth} {lunar.gzDay}</p></Item>
+          <Item label="阳历:"><p>{lunar.cYear}-{lunar.cMonth}-{lunar.cDay} {lunar.cHour}:00:00</p></Item>
+          <Item label="农历:"><p>{lunar.lYear} {lunar.IMonthCn} {lunar.IDayCn} {lunar.IHourCn}</p></Item>
+          <Item label="干支纪年:"><p>{lunar.gzYear} {lunar.gzMonth} {lunar.gzDay} {lunar.gzHour}</p></Item>
           <Item label="星期:"><p>{lunar.ncWeek}</p></Item>
           <Item label="星座:"><p>{lunar.astro}</p></Item>
           <Item label="生效:"><p>{lunar.Animal}</p></Item>
